@@ -1,18 +1,20 @@
-/* Reset some basic styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
-
 /* Body and container */
+
 body {
     background-color: #e6f0ff; /* light blue background */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;  
+}
+
+#quiz-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 40px auto;
 }
 
 /* START SCREEN */
@@ -56,120 +58,140 @@ body {
     background-color: #003080;
 }
 
-#quiz-container {
-    width: 90%;
-    max-width: 700px;
-}
-
-/* Card design for all screens */
+/* -------------------- CARD DESIGN -------------------- */
 .quiz-card, .result-card {
-    background-color: #ffffff;
-    padding: 30px 25px;
-    margin: 20px 0;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    text-align: center;
+    background: #fff;
+    padding: 30px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* Headings */
-.quiz-card h1, .quiz-card h2, .result-card h2 {
-    color: #004aad; /* dark blue */
+.quiz-card h2, .quiz-card h3, .result-card h2 {
+    margin-top: 0;
+}
+
+/* -------------------- QUESTION TEXT -------------------- */
+#question-text {
+    font-size: 1.4rem;
+    font-weight: 600;
     margin-bottom: 20px;
 }
 
-.quiz-card p, .result-card p {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-}
-
-/* Buttons */
-.btn, .nav-btn, .options-group button {
-    cursor: pointer;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    margin: 8px;
-    transition: background-color 0.3s ease;
-}
-
-.btn {
-    background-color: #004aad;
-    color: white;
-}
-
-.btn:hover {
-    background-color: #003080;
-}
-
-.nav-btn {
-    background-color: #0080ff;
-    color: white;
-    min-width: 80px;
-}
-
-.nav-btn:hover {
-    background-color: #0059b3;
-}
-
-/* Options layout */
+/* -------------------- OPTIONS -------------------- */
 .options-group {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-btn-wrapper {
+    display: flex;
     align-items: center;
-    margin: 20px 0;
-    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.options-group button {
-    background-color: #e6f0ff;
-    color: #004aad;
-    min-width: 80px;
-    margin-right: 5px;
-}
-
-.options-group button:hover {
-    background-color: #cce0ff;
-}
-
-/* Align labels beside buttons */
-.options-group .option-label {
-    margin-right: 15px;
+.option-btn {
+    padding: 10px 20px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
     font-size: 1rem;
-    color: #004aad;
+    transition: all 0.2s ease;
 }
 
-/* Navigation buttons container */
+.option-btn:hover {
+    background: #e6f0ff;
+}
+
+.option-btn.selected {
+    background: #007bff;
+    color: #fff;
+    border-color: #0056b3;
+}
+
+/* -------------------- NAVIGATION BUTTONS -------------------- */
 #navigation {
+    margin-top: 25px;
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
 }
 
-/* Likert & Yes/No evaluation buttons */
+.nav-btn, .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #007bff;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover, .btn:hover {
+    background: #0056b3;
+}
+
+.nav-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* -------------------- TOP 3 COURSES -------------------- */
+#course-results ol {
+    padding-left: 20px;
+}
+
+#course-results li {
+    background: #f0f8ff;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Add numbering with rank colors */
+#course-results li:nth-child(1) {
+    border-left: 6px solid gold;
+}
+#course-results li:nth-child(2) {
+    border-left: 6px solid silver;
+}
+#course-results li:nth-child(3) {
+    border-left: 6px solid #cd7f32; /* Bronze */
+}
+
+/* -------------------- EVALUATION -------------------- */
 .likert, .yn {
     display: flex;
-    justify-content: center;
+    gap: 10px;
     margin-bottom: 15px;
-    flex-wrap: wrap;
 }
 
 .likert button, .yn button {
-    min-width: 40px;
-    margin: 5px;
-    background-color: #e6f0ff;
-    color: #004aad;
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: 2px solid #28a745;
+    background: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
 }
 
 .likert button:hover, .yn button:hover {
-    background-color: #cce0ff;
+    background: #e6f9f0;
 }
 
-/* Textarea */
-textarea {
-    width: 90%;
-    height: 100px;
-    margin: 10px 0;
+.likert button.selected, .yn button.selected {
+    background: #28a745;
+    color: #fff;
+    border-color: #19692c;
+}
+
+textarea#eval5 {
+    width: 100%;
+    height: 80px;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -177,40 +199,8 @@ textarea {
     font-size: 1rem;
 }
 
-/* Result list */
-#course-results {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 15px 0;
-}
-
-#course-results div {
-    background-color: #e6f0ff;
-    color: #004aad;
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin: 5px 0;
-    width: 80%;
-    font-weight: bold;
-}
-
-/* Responsive adjustments */
-@media (max-width: 500px) {
-    .options-group {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .options-group button {
-        margin-bottom: 10px;
-    }
-
-    #navigation {
-        flex-direction: column;
-    }
-
-    .nav-btn {
-        margin: 5px 0;
-    }
+/* -------------------- RESULT CARDS -------------------- */
+.result-card p, .result-card ol {
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
