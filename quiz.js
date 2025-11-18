@@ -1,5 +1,5 @@
 
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbyczSjSAxIfVS6MkcnxwakN2_687UMrZQDyVHe_9GFIFR9eOZ0uAejktT_Ez1ZXoApk/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzgND0qz9Y3eotR57rSufl-HADKBtpYbKso-7kxOwtfuyPyBVxr4R7EEW9nnu1Bsfy1/exec";
 
 // -------------------- DATA --------------------
 const questions = [
@@ -340,10 +340,23 @@ evaluationQuestions.forEach(eq => {
     submit.className = "btn";
     submit.addEventListener("click", ()=>{
         evaluation.eval5 = document.getElementById("eval5")?.value || "";
-        evalCard.style.display = "none";
-        showCongratsScreen();
-    });
 
+         // Send data to Google Sheets
+        fetch(SHEET_URL, {
+            method: "POST",
+            mode: "no-cors", // Google Apps Script doesn’t send CORS headers
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                answers: answers,
+                evaluation: evaluation
+            })
+        });
+
+    evalCard.style.display = "none";
+    showCongratsScreen();
+});
     evalCard.appendChild(submit);
     evalCard.style.display = "block";
 }
