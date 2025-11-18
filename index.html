@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Interest Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="quiz-container">
+
+    <!-- START SCREEN -->
+    <div class="quiz-card" id="start-card">
+        <h1>Career Interest Quiz</h1>
+        <p>Discover your best-fit career cluster and course!</p>
+        <button id="start-btn" class="btn">Start Quiz</button>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div class="quiz-card" id="quiz-card" style="display:none;">
+        <h2 id="question-text"></h2>
+
+        <div id="options-group" class="options-group">
+            <!-- Options will be dynamically added here -->
+        </div>
+
+        <div id="navigation">
+            <button id="back-btn" class="nav-btn">Back</button>
+            <button id="next-btn" class="nav-btn">Next</button>
+        </div>
+    </div>
+
+    <!-- CLUSTER RESULT SCREEN -->
+    <div class="result-card" id="cluster-card" style="display:none;">
+        <h2>Your Career Cluster</h2>
+        <p id="cluster-result"></p>
+        <button id="to-course-btn" class="btn">See Suggested Courses</button>
+    </div>
+
+    <!-- TOP 3 COURSES RESULT SCREEN -->
+    <div class="result-card" id="course-card" style="display:none;">
+        <h2>Your Top 3 Suggested Courses</h2>
+        <div id="course-results"></div>
+        <button id="to-eval-btn" class="btn">Proceed to Evaluation</button>
+    </div>
+
+    <!-- EVALUATION SCREEN -->
+    <div class="quiz-card" id="evaluation-card" style="display:none;">
+        <h2>Evaluation</h2>
+
+        <label>1. How would you rate the clarity of the quiz? (1–5)</label>
+        <div class="likert" id="eval1">
+            <button data-value="1">1</button>
+            <button data-value="2">2</button>
+            <button data-value="3">3</button>
+            <button data-value="4">4</button>
+            <button data-value="5">5</button>
+        </div>
+
+        <label>2. How would you rate the ease of use? (1–5)</label>
+        <div class="likert" id="eval2">
+            <button data-value="1">1</button>
+            <button data-value="2">2</button>
+            <button data-value="3">3</button>
+            <button data-value="4">4</button>
+            <button data-value="5">5</button>
+        </div>
+
+        <label>3. Do you think this quiz helped you in determining your career path?</label>
+        <div class="yn" id="eval3">
+            <button data-value="Yes">Yes</button>
+            <button data-value="No">No</button>
+        </div>
+
+        <label>4. Do you think this quiz can help other students?</label>
+        <div class="yn" id="eval4">
+            <button data-value="Yes">Yes</button>
+            <button data-value="No">No</button>
+        </div>
+
+        <label>5. Your recommendations or thoughts:</label>
+        <textarea id="eval5" placeholder="Type your answer here..."></textarea>
+
+        <button id="submit-btn" class="btn">Submit</button>
+        <p id="submit-msg"></p>
+    </div>
+
+    <!-- REFERENCES / Footer -->
+    <div id="references" class="quiz-card" style="display:none;">
+        <h3>References</h3>
+        <p>Include any citations or sources you want to show here.</p>
+    </div>
+
+</div>
+
+<script src="quiz.js"></script>
+</body>
+</html>
