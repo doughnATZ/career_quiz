@@ -287,76 +287,82 @@ function showTopCourses() {
     courseResults.innerHTML = "<ol>" + topPrograms.map(p => `<li>${p}</li>`).join("") + "</ol>";
 }
 
-// -------------------- SHOW EVALUATION --------------------
 function showEvaluation() {
-    evalCard.innerHTML = "";
-    // Inside showEvaluation() or equivalent
-evaluationQuestions.forEach(eq => {
-    const div = document.getElementById(eq.key + "-group");
-    div.innerHTML = "";
+    evalCard.innerHTML = ""; // clear previous content
 
-    if(eq.type === "likert") {
-        for(let j=1;j<=5;j++){
-            const btn = document.createElement("button");
-            btn.textContent = j;
-            btn.dataset.value = j;
-            if(evaluation[eq.key] == j) btn.classList.add("selected");
+    evaluationQuestions.forEach(eq => {
+        const div = document.createElement("div");
+        div.className = "eval-group";
+        div.id = eq.key + "-group";
 
-            btn.addEventListener("click", ()=>{
-                evaluation[eq.key] = j; // save rating
-                Array.from(div.children).forEach(c => c.classList.remove("selected")); // remove from others
-                btn.classList.add("selected"); // highlight selected
+        const label = document.createElement("p");
+        label.textContent = eq.question;
+        div.appendChild(label);
+
+        if(eq.type === "likert") {
+            for(let j = 1; j <= 5; j++) {
+                const btn = document.createElement("button");
+                btn.className = "likert-btn";
+                btn.textContent = j;
+                btn.dataset.value = j;
+                if(evaluation[eq.key] == j) btn.classList.add("selected");
+
+                btn.addEventListener("click", () => {
+                    evaluation[eq.key] = j;
+                    Array.from(div.querySelectorAll("button")).forEach(b => b.classList.remove("selected"));
+                    btn.classList.add("selected");
+                });
+
+                div.appendChild(btn);
+            }
+        } else if(eq.type === "yn") {
+            ["Yes", "No"].forEach(v => {
+                const btn = document.createElement("button");
+                btn.className = "yn-btn";
+                btn.textContent = v;
+                btn.dataset.value = v;
+                if(evaluation[eq.key] == v) btn.classList.add("selected");
+
+                btn.addEventListener("click", () => {
+                    evaluation[eq.key] = v;
+                    Array.from(div.querySelectorAll("button")).forEach(b => b.classList.remove("selected"));
+                    btn.classList.add("selected");
+                });
+
+                div.appendChild(btn);
             });
-
-            div.appendChild(btn);
+        } else if(eq.type === "text") {
+            const textarea = document.createElement("textarea");
+            textarea.id = eq.key;
+            textarea.value = evaluation[eq.key] || "";
+            textarea.addEventListener("input", () => evaluation[eq.key] = textarea.value);
+            div.appendChild(textarea);
         }
-    } else if(eq.type === "yn") {
-        ["Yes","No"].forEach(v=>{
-            const btn = document.createElement("button");
-            btn.textContent = v;
-            btn.dataset.value = v;
-            if(evaluation[eq.key] == v) btn.classList.add("selected");
 
-            btn.addEventListener("click", ()=>{
-                evaluation[eq.key] = v;
-                Array.from(div.children).forEach(c => c.classList.remove("selected"));
-                btn.classList.add("selected");
-            });
-
-            div.appendChild(btn);
-        });
-    } else if(eq.type === "text") {
-        const textarea = document.createElement("textarea");
-        textarea.id = eq.key;
-        textarea.value = evaluation[eq.key] || "";
-        textarea.addEventListener("input", ()=> evaluation[eq.key] = textarea.value );
-        div.appendChild(textarea);
-    }
-    evalCard.appendChild(div);
+        evalCard.appendChild(div);
     });
 
     const submit = document.createElement("button");
     submit.textContent = "Submit";
     submit.className = "btn";
-    submit.addEventListener("click", ()=>{
+    submit.addEventListener("click", () => {
         evaluation.eval5 = document.getElementById("eval5")?.value || "";
 
-         // Send data to Google Sheets
+        // Send to Google Sheets
         fetch(SHEET_URL, {
             method: "POST",
-            mode: "no-cors", // Google Apps Script doesn’t send CORS headers
-            headers: {
-                "Content-Type": "application/json"
-            },
+            mode: "no-cors",
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 answers: answers,
                 evaluation: evaluation
             })
         });
 
-    evalCard.style.display = "none";
-    showCongratsScreen();
-});
+        evalCard.style.display = "none";
+        showCongratsScreen();
+    });
+
     evalCard.appendChild(submit);
     evalCard.style.display = "block";
 }
